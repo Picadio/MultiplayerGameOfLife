@@ -89,7 +89,7 @@ public class Client(IPEndPoint ipEndPoint)
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Receive error: " + ex.Message);
+            Console.WriteLine("Receive error: " + ex.StackTrace);
             Disconnect();
         }
     }
@@ -110,7 +110,7 @@ public class Client(IPEndPoint ipEndPoint)
         return buffer;
     }
     
-    public void Disconnect()
+    private void Disconnect()
     {
         lock (_lock)
         {

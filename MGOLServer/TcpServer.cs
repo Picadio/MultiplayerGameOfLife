@@ -53,8 +53,8 @@ public class TcpServer(int port)
                 {
                     payload = new byte[]{0};
                 }
-                
-                var response = packet.Handle(client, payload);
+                packet.Read(payload);
+                var response = packet.Handle(client);
 
                 client.Send(response);
             }

@@ -2,7 +2,8 @@ namespace MGOClient.algorithm;
 
 public abstract class BaseAlgorithm<T>(int rows, int cols) : IAlgorithm<T>
 {
-    public T[,] CurrentGrid { get; protected set; } = new T[rows, cols];
+    public T[,] CurrentGrid { get; set; } = new T[rows, cols];
+    public int Step { get; set; } = 0;
     public int Rows { get; } = rows;
     public int Cols { get; } = cols;
     protected T[,] NextGrid = new T[rows, cols];
@@ -20,4 +21,5 @@ public abstract class BaseAlgorithm<T>(int rows, int cols) : IAlgorithm<T>
     
     public abstract void NextGeneration();
     public abstract void Reset();
+    public abstract void Rollback(int step);
 }

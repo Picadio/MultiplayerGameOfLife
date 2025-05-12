@@ -4,28 +4,38 @@ namespace MGOLServer.packets.impl;
 
 public class JoinSessionPacket : BasePacket
 {
+    private Guid _guid;
     public JoinSessionPacket() : base(PacketType.JoinSession)
     {
         
     }
     
-    public JoinSessionPacket(byte[] payload) : base(PacketType.JoinSession)
+    public JoinSessionPacket(Guid guid) : base(PacketType.JoinSession)
     {
-        Payload = payload;
+        _guid = guid;
     }
-    public override byte[] Handle(Client client, byte[] payload)
+
+    public override void Read(byte[] payload)
     {
-        var id = new Guid(payload);
-        Console.WriteLine("Receive session id: " + id);
-        var session = SessionManager.Instance.GetSession(id);
+        _guid = new Guid(payload);
+    }
+    
+    protected override byte[]? GetPayload()
+    {
+        return _guid.ToByteArray();
+    }
+
+    public override byte[] Handle(Client client)
+    {
+        Console.WriteLine("Receive session id: " + _guid);
+        var session = SessionManager.Instance.GetSession(_guid);
         if (session == null)
         {
             return new byte[] { 0x0 };
         }
-        
         if(session.SecondClient != null) return new byte[] { 0x0 };
         session.JoinClient(client);
-        session.Send(client, new CreateSessionPacket());
-        return new CreateSessionPacket().GetBytes();
+        session.Send(client, new CreateSessionPacket(true));
+        return new CreateSessionPacket(false).GetBytes();
     }
 }

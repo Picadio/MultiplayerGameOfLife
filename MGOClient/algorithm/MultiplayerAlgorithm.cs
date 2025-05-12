@@ -1,9 +1,12 @@
+using System.Reflection;
+
 namespace MGOClient.algorithm;
 
 public class MultiplayerAlgorithm(int rows, int cols) : BaseAlgorithm<int>(rows, cols)
 {
     public override void NextGeneration()
     {
+        Step++;
         for (int x = 0; x < Rows; x++)
         {
             for (int y = 0; y < Cols; y++)
@@ -39,6 +42,11 @@ public class MultiplayerAlgorithm(int rows, int cols) : BaseAlgorithm<int>(rows,
                 NextGrid[x, y] = 0;
             }
         }
+    }
+
+    public override void Rollback(int step)
+    {
+        
     }
 
     private NeighboursInfo GetNeighborsInfo(int x, int y, int value)

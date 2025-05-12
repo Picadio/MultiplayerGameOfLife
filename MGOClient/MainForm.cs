@@ -132,9 +132,14 @@ public sealed partial class MainForm : Form
                 MessageBox.Show("Увійдіть або створіть сессію", "Немає сессії", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            Timer.Enabled = !Timer.Enabled;
-            var packet = new StartGamePacket();
+            var packet = new StartGamePacket(!Timer.Enabled);
             await Program.Client.SendAsync(packet);
+            Timer.Enabled = !Timer.Enabled;
+            if (!Timer.Enabled)
+            {
+                var packet2 = new SyncPacket(_algorithm.Step, _algorithm.CurrentGrid);
+                await Program.Client.SendAsync(packet2);
+            }
         };
         resetButton.Click += async (_, _) =>
         {
@@ -196,6 +201,7 @@ public sealed partial class MainForm : Form
             MessageBox.Show("Увійдіть або створіть сессію", "Немає сессії", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
+        if(Timer.Enabled) return;
         
         var packet = new SetCellPacket(x, y);
         await Program.Client.SendAsync(packet);
@@ -208,13 +214,18 @@ public sealed partial class MainForm : Form
         _algorithm.SetCellValue(x, y, value);
         Invalidate();
     }
-
-    public void SwitchTimer()
+    
+    public void SwitchTimer(bool enable)
     {
         this.Invoke(() =>
         {
-            Timer.Enabled = !Timer.Enabled;
+            Timer.Enabled = enable;
         });
+    }
+    
+    public void SwitchTimer()
+    {
+        SwitchTimer(!Timer.Enabled);
     }
     
     public void ChangeSpeed(int newSpeed)

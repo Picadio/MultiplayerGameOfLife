@@ -12,6 +12,6 @@ public class DisconnectSessionPacket : BasePacket
     {
         Program.Client.SessionConnected = false;
         Program.MainForm.SetConnected(false);
-        Program.MainForm.Reset();
+        Program.MainForm.SwitchTimer(false);
     }
 }

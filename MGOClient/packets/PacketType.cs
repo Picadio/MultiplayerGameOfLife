@@ -10,4 +10,5 @@ public class PacketType
     public static byte NextStep = 0x06;
     public static byte ResetPacket = 0x07;
     public static byte ChangeSpeed = 0x08;
+    public static byte Sync = 0x09;
 }

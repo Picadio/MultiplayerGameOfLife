@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MGOLServer", "MGOLServer\MGOLServer.csproj", "{9F95CD2F-033A-4767-8097-11ACC509BCC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MGOL.Server", "MGOL.Server\MGOL.Server.csproj", "{9F95CD2F-033A-4767-8097-11ACC509BCC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MGOClient", "MGOClient\MGOClient.csproj", "{204988F2-CCC2-44AC-83A5-1CDA8805CD95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MGOL.Client", "MGOL.Client\MGOL.Client.csproj", "{204988F2-CCC2-44AC-83A5-1CDA8805CD95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

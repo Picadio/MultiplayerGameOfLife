@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace MGOL.Client.algorithm;
 
 public class MultiplayerAlgorithm(int rows, int cols) : BaseAlgorithm<int>(rows, cols)
@@ -27,11 +25,11 @@ public class MultiplayerAlgorithm(int rows, int cols) : BaseAlgorithm<int>(rows,
                 
             }
         }
-
+        
         // Swap grids
         (CurrentGrid, NextGrid) = (NextGrid, CurrentGrid);
     }
-
+    
     public override void Reset()
     {
         for (int x = 0; x < cols; x++)
@@ -42,6 +40,8 @@ public class MultiplayerAlgorithm(int rows, int cols) : BaseAlgorithm<int>(rows,
                 NextGrid[x, y] = 0;
             }
         }
+
+        Step = 0;
     }
 
     private NeighboursInfo GetNeighborsInfo(int x, int y, int value)

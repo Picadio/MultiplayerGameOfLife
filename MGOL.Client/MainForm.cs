@@ -15,6 +15,7 @@ public sealed partial class MainForm : Form
     public Timer Timer { get; }
     public TextBox IpTextBox { get; private set; }
     public Label IsConnectedLabel { get; private set; }
+    public Label CurrentStepLabel { get; private set; }
     public MainForm(IAlgorithm<int> algorithm)
     {
         _algorithm = algorithm;
@@ -43,7 +44,7 @@ public sealed partial class MainForm : Form
         };
         var connectButton = new Button
         {
-            Text = "Під'єднатись",
+            Text = "Приєднатися",
             Location = new Point(_algorithm.Cols * CellSize + 10, ClientSize.Height - (ButtonHeight + ButtonSpacing) * 2),
             Size = new Size(120, 30)
         };
@@ -113,6 +114,12 @@ public sealed partial class MainForm : Form
             Location = new Point(_algorithm.Cols * CellSize + 10, ClientSize.Height - (ButtonHeight + ButtonSpacing) * 4),
             Size = new Size(ButtonWidth, ButtonHeight)
         };
+        CurrentStepLabel = new Label()
+        {
+            Text = $"Ітерація: 0",
+            Location = new Point(_algorithm.Cols * CellSize + 10, (ButtonHeight + ButtonSpacing) * 6),
+            Size = new Size(ButtonWidth, ButtonHeight)
+        };
         
         nextStepButton.Click += async (_, _) =>
         {
@@ -170,6 +177,7 @@ public sealed partial class MainForm : Form
         Controls.Add(IpTextBox);
         Controls.Add(resetButton);
         Controls.Add(speedTrackBar);
+        Controls.Add(CurrentStepLabel);
     }
     
     private void DrawGrid(Graphics g)
@@ -235,7 +243,12 @@ public sealed partial class MainForm : Form
 
     public void NextStep()
     {
-        _algorithm.NextGeneration(); 
+        _algorithm.NextGeneration();
+        CurrentStepLabel.Text = "Ітерація: " + _algorithm.Step;
+        if (!_algorithm.IsChanged())
+        {
+            SwitchTimer(false);
+        }
         Invalidate(); 
     }
 
@@ -243,6 +256,7 @@ public sealed partial class MainForm : Form
     {
         Timer.Enabled = false;
         _algorithm.Reset();
+        CurrentStepLabel.Text = "Ітерація: 0";
         Invalidate();
     }
 

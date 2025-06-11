@@ -21,4 +21,20 @@ public abstract class BaseAlgorithm<T>(int rows, int cols) : IAlgorithm<T>
     
     public abstract void NextGeneration();
     public abstract void Reset();
+
+    public bool IsChanged()
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                if (!Equals(NextGrid[i, j], CurrentGrid[i, j]))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }

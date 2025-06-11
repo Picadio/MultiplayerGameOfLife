@@ -10,4 +10,5 @@ public interface IAlgorithm<T>
     public void SetCellValue(int x, int y, T value);
     public bool InBounds(int x, int y);
     public void Reset();
+    public bool IsChanged();
 }

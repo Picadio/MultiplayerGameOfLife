@@ -1,5 +1,3 @@
-using System.Net.Sockets;
-
 namespace MGOL.Client.packets;
 
 public interface IPacket

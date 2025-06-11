@@ -28,6 +28,7 @@ public class SessionManager
     public Session? GetSession(Client client)
     {
         return _sessions.Values
-            .FirstOrDefault(s => s.FirstClient.TcpClient.Equals(client.TcpClient) || s.SecondClient.TcpClient.Equals(client.TcpClient));
+            .FirstOrDefault(s => s.FirstClient.TcpClient.Equals(client.TcpClient) || 
+                                 s.SecondClient.TcpClient.Equals(client.TcpClient));
     }
 }

@@ -33,17 +33,16 @@ public class Client(IPEndPoint ipEndPoint)
                     await _client.ConnectAsync(ipEndPoint, token);
                     _stream = _client.GetStream();
                     Console.WriteLine("Connected!");
-
-                    // Читання у фоновому потоці
+                    
                     _ = Task.Run(() => Listen(token));
                 }
 
-                await Task.Delay(2000, token); // Повторна перевірка
+                await Task.Delay(2000, token); 
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Connection failed: " + ex.Message);
-                await Task.Delay(5000, token); // Зачекай перед повтором
+                await Task.Delay(5000, token);
             }
         }
     }
